@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout, login
 from django.contrib.auth import authenticate
 
-from .serializers import DoctorDataSerializer, UserInfoSerializer
+from .serializers import DoctorDataSerializer, UserInfoSerializer, UserSeralizer
 from doctors.models import Doctor
 
 # Create your views here.
@@ -42,3 +42,12 @@ class Login(APIView):
                 'user': serializer.data
             }
         return Response(user_data, status=status.HTTP_200_OK)
+
+class RegistrarUsuario(APIView):
+    allowed_methods = ['POST']
+
+    def post(self, request):
+        serializer = UserSeralizer(data = request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'mensaje': 'Usuario creado'}, status=status.HTTP_201_CREATED)
