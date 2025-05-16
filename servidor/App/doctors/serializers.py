@@ -3,8 +3,6 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User, Group
 from .models import Doctor
 
-
-
 class DoctorSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length = 150)
     last_name = serializers.CharField(max_length = 150)
