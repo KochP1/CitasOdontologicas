@@ -2,8 +2,9 @@ import { Link } from "react-router-dom"
 import './sidebar.css'
 
 export const SideBar = () => {
+
     return (
-        <aside className="aside-sidebar">
+        <aside className="aside-sidebar" style={{display: 'flex'}}>
             <nav className="sidebar">
                 <div className="logo__container">
                     <Link to={"/inicio"}>

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { SideBar, Header } from './components';
-import { Inicio } from './pages';
+import { Inicio, LoginPage } from './pages';
 import './App.css'
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
         <div className='content'>
           <Header/>
           <Routes>
+            <Route path='/' element={ <LoginPage/> } />
             <Route path='/inicio' element={ <Inicio/> } />
           </Routes>
         </div>
