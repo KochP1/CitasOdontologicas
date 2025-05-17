@@ -51,3 +51,26 @@ class DoctorSerializer(serializers.Serializer):
         )
 
         return doctor
+
+class UserDoctorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+            'username'
+        ]
+
+class ObtenerDoctores(serializers.ModelSerializer):
+    usuario = UserDoctorSerializer(read_only = True)
+    class Meta:
+        model = Doctor
+        fields = [
+            'usuario',
+            'especialidad',
+            'telefono',
+            'dirección',
+            'vacaciones'
+        ]
