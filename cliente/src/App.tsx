@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { SideBar, Header } from './components';
-import { Inicio, LoginPage } from './pages';
+import { LoginPage, Dashboard } from './pages';
 import './App.css'
 
 function App() {
@@ -8,16 +7,10 @@ function App() {
   return (
     <>
     <Router>
-      <div className='wrapper'>
-        <SideBar/>
-        <div className='content'>
-          <Header/>
-          <Routes>
-            <Route path='/' element={ <LoginPage/> } />
-            <Route path='/inicio' element={ <Inicio/> } />
-          </Routes>
-        </div>
-      </div>
+      <Routes>
+        <Route path='/' element={ <LoginPage/> } />
+        <Route path='/dashboard/*' element={ <Dashboard/> } />
+      </Routes>
     </Router>
     </>
   )

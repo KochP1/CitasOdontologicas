@@ -7,8 +7,6 @@ import { type FormValuesLogin, schema_login } from "../../components/models";
 import './login.css'
 
 export const LoginPage = () => {
-    const header = document.getElementsByTagName('header');
-    const sidebar = document.getElementsByClassName('.aside-sidebar')
 
     const navigate = useNavigate();
 
@@ -50,7 +48,7 @@ export const LoginPage = () => {
                 user: data.user
             }));
 
-            navigate('/')
+            navigate('/dashboard/')
         } catch (error) {
             setApiError(error as Error);
             console.log(error)
@@ -59,7 +57,7 @@ export const LoginPage = () => {
 
     return (
         <div className="login-form__wrapper">
-            <form className="login-form">
+            <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
                 <InputFormLogin name="username" control={control} label="Username" type="text" error={errors.username}></InputFormLogin>
                 <InputFormLogin name="password" control={control} label="Contraseña" type="password" error={errors.password}></InputFormLogin>
 
@@ -69,6 +67,14 @@ export const LoginPage = () => {
                     <button className="btn-login">Inciar sesión</button>
                 </div>
             </form>
+
+            {apiError && (
+                <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>invalid credentials</strong>
+                    <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                    </button>
+                </div>
+            )}
         </div>
     )
 }
