@@ -7,7 +7,7 @@ export const SideBar = () => {
         <aside className="aside-sidebar" style={{display: 'flex'}}>
             <nav className="sidebar">
                 <div className="logo__container">
-                    <Link to={"/inicio"}>
+                    <Link to={"/dashboard/"}>
                         <img src="/images/dienteMuyReal.png" alt="DentalRecords" className="logo"/>
                     </Link>
                 </div>
