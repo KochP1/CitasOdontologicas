@@ -11,6 +11,24 @@
     padding-top: 120px;
 }
 
+@media (max-width:1800px) {
+    .stats-grid__container {
+        grid-template-columns: repeat(2, 400px);
+    }
+}
+
+@media (max-width:1251px) {
+    .stats-grid__container {
+        grid-template-columns: repeat(1, 400px);
+    }
+}
+
+@media (max-width:500px) {
+    .stats-grid__container {
+        grid-template-columns: repeat(1, 100%);
+    }
+}
+
 .stat__container{
     display: flex;
     justify-content: center;

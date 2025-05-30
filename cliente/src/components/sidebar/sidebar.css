@@ -21,6 +21,13 @@
     transition: all 0.3s ease;
 }
 
+@media (max-width:500px) {
+    .aside-sidebar {
+        display: none;
+    }
+}
+
+
 .logo__container{
     display: flex;
     justify-content: center;

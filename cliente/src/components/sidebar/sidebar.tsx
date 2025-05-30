@@ -4,7 +4,7 @@ import './sidebar.css'
 export const SideBar = () => {
 
     return (
-        <aside className="aside-sidebar" style={{display: 'flex'}}>
+        <aside className="aside-sidebar">
             <nav className="sidebar">
                 <div className="logo__container">
                     <Link to={"/dashboard/"}>
@@ -17,7 +17,7 @@ export const SideBar = () => {
                     </div>
                     
                     <div className="link__container">
-                        <Link to={"/inicio"} className="sidebar-link">Inicio</Link>
+                        <Link to={"/dashboard/"} className="sidebar-link">Inicio</Link>
                     </div>
                 </div>
 
@@ -26,7 +26,7 @@ export const SideBar = () => {
                         <i className="fa-solid fa-user-doctor"></i>
                     </div>
                     <div className="link__container">
-                        <Link to={""}className="sidebar-link">Odontólogos</Link>
+                        <Link to={"/dashboard/odontologos"}className="sidebar-link">Odontólogos</Link>
                     </div>
                 </div>
 
@@ -36,7 +36,7 @@ export const SideBar = () => {
                     </div>
 
                     <div className="link__container">
-                        <Link to={""} className="sidebar-link">Pacientes</Link>
+                        <Link to={"/dashboard/pacientes"} className="sidebar-link">Pacientes</Link>
                     </div>
                 </div>
 
