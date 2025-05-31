@@ -2,6 +2,7 @@ import './odontologos.css'
 import { useFetch } from '../../hooks/useFetch/useFetch';
 import { OpcionesModulos } from '../../components';
 import { Modal } from '../../components';
+import { useState } from 'react';
 
 const url = 'http://127.0.0.1:8000/doctores/crear_doctor/'
 
@@ -22,10 +23,21 @@ interface Profesional {
 }
 
 export const OdontologsPage = () => {
+    const [modal, setModal] = useState(false);
+    
+    const toggleModal = () => {
+        setModal(!modal);
+    };
+    
+    if(modal) {
+        document.body.classList.add('active-modal')
+    } else {
+        document.body.classList.remove('active-modal')
+    }
     const {data, error} = useFetch<Profesional[]>(url);
     return(
         <>
-            <OpcionesModulos modulo='Odontólogos'/>
+            <OpcionesModulos modulo='Odontólogos' OnClick={toggleModal}/>
             <div className='table__wrapper'>
                 <div className='table-responsive'>
                     <table className="table table-dark table-striped">
@@ -60,7 +72,7 @@ export const OdontologsPage = () => {
                 </div>
             </div>
 
-            <Modal modulo='Odontólogos'/>
+            <Modal modulo='Odontólogo' toggle={toggleModal} modal={modal}></Modal>
         </>
     )
 }

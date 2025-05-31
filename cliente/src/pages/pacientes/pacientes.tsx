@@ -4,8 +4,6 @@ import { OpcionesModulos } from '../../components';
 
 const url = 'http://127.0.0.1:8000/pacientes/crear_paciente/'
 
-
-
 interface Paciente {
     id: number
     nombre: string;
@@ -21,7 +19,7 @@ export const PacientesPage = () => {
     const {data, error} = useFetch<Paciente[]>(url);
     return(
         <>
-            <OpcionesModulos modulo='Pacientes'/>
+            <OpcionesModulos modulo='Pacientes' OnClick={() => null}/>
             <div className='table__wrapper'>
                 <div className='table-responsive'>
                     <table className="table table-dark table-striped">
@@ -40,7 +38,7 @@ export const PacientesPage = () => {
 
                         <tbody>
                             {data !== null && !error && data.map((pacientes) => (
-                                <tr>
+                                <tr key={pacientes.id}>
                                     <td>{pacientes.id}</td>
                                     <td>{pacientes.nombre}</td>
                                     <td>{pacientes.segundo_nombre}</td>

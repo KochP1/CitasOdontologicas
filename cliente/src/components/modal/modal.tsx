@@ -1,34 +1,38 @@
-import './modal.css'
+import type { ReactNode } from 'react';
+import './modal.css';
+import { createPortal } from 'react-dom';
+
+const modalRoot = document.getElementById('modal-root');
 
 interface Params {
-    modulo: string
+    modulo: string;
+    modal: boolean
+    toggle: () => void
+    children?: ReactNode
 }
 
-export const Modal = ({modulo}: Params) => {
-    return (
-        <div 
-            className="modal fade" 
-            id={modulo} 
-            tabIndex={-1 }
-            aria-labelledby="exampleModalLabel" 
-            aria-hidden="true"
-        >
-            <div className="modal-dialog">
+export const Modal = ({ modulo, modal, toggle, children }: Params) => {
+
+    if (!modal || !modalRoot) return null;
+
+    return createPortal(
+        <>
+
+            {modal && (
+                <div className="modal">
+                <div onClick={toggle} className="overlay"></div>
                 <div className="modal-content">
-                    <div className="modal-header">
-                        <h1 className="modal-title fs-5" id="exampleModalLabel">Editar {modulo}</h1>
-                        <button 
-                            type="button" 
-                            className="btn-close" 
-                            data-bs-dismiss="modal" 
-                            aria-label="Close"
-                        ></button>
+                    <h2>{modulo}</h2>
+                    <div className='children__wrapper'>
+                        {children}
                     </div>
-                    <div className="modal-body">
-                        {/* Contenido del modal aquí */}
-                    </div>
+                    <button className="close-modal" onClick={toggle}>
+                    <i className="fa-solid fa-xmark"></i>
+                    </button>
                 </div>
-            </div>
-        </div>
-    )
-}
+                </div>
+            )}
+        </>
+        ,modalRoot
+    );
+};
