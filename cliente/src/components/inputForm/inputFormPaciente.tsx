@@ -11,7 +11,7 @@ interface Props {
 
 export const InputFormPaciente = ({name, control, label, type, error}: Props) => {
     return (
-        <div className="input-form__container">
+        <div className="input-form-paciente__container">
             <label htmlFor={name}>{label}</label>
             <Controller name={name} control={control} render={({field}) => <input id={name} type={type} {...field} className={`form-control ${error ? "is-invalid": ""}`}></input>}/>
         </div>
