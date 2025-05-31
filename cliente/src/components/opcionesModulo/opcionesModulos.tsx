@@ -9,7 +9,7 @@ export const OpcionesModulos = ({modulo}: Params) => {
         <div className='options-menu__container'>
             <h1>{modulo}</h1>
             <div className='btn-options__container'>
-                <button className='btn-options'>Crear {modulo}</button>
+                <button className='btn-options' data-bs-toggle="modal" data-bs-target={`#${modulo}`}>Crear {modulo}</button>
                 <button className='btn-options'>Generar reporte</button>
                 <button className='btn-options'>Migrar a excel</button>
             </div>

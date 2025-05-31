@@ -15,7 +15,6 @@ export const LoginPage = () => {
         mode: 'onBlur'
     });
 
-     // Estado para manejar la respuesta
     const [apiError, setApiError] = useState<Error | null>(null);
     const onSubmit: SubmitHandler<FormValuesLogin> = async (fields) => {
         setApiError(null);
@@ -70,7 +69,7 @@ export const LoginPage = () => {
 
             {apiError && (
                 <div className="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>invalid credentials</strong>
+                    <strong>Credenciales invalidas</strong>
                     <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close">
                     </button>
                 </div>

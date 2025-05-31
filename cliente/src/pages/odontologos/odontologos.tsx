@@ -1,6 +1,7 @@
 import './odontologos.css'
 import { useFetch } from '../../hooks/useFetch/useFetch';
 import { OpcionesModulos } from '../../components';
+import { Modal } from '../../components';
 
 const url = 'http://127.0.0.1:8000/doctores/crear_doctor/'
 
@@ -43,7 +44,7 @@ export const OdontologsPage = () => {
 
                         <tbody>
                             {data !== null && !error && data.map((doctores) => (
-                                <tr>
+                                <tr key={doctores.usuario.id}>
                                     <td>{doctores.usuario.id}</td>
                                     <td>{doctores.usuario.first_name}</td>
                                     <td>{doctores.usuario.last_name}</td>
@@ -58,6 +59,8 @@ export const OdontologsPage = () => {
                     </table>
                 </div>
             </div>
+
+            <Modal modulo='Odontólogos'/>
         </>
     )
 }
