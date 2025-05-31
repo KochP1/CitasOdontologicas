@@ -1,5 +1,6 @@
 import './odontologos.css'
 import { useFetch } from '../../hooks/useFetch/useFetch';
+import { OpcionesModulos } from '../../components';
 
 const url = 'http://127.0.0.1:8000/doctores/crear_doctor/'
 
@@ -23,6 +24,7 @@ export const OdontologsPage = () => {
     const {data, error} = useFetch<Profesional[]>(url);
     return(
         <>
+            <OpcionesModulos modulo='Odontólogos'/>
             <div className='table__wrapper'>
                 <div className='table-responsive'>
                     <table className="table table-dark table-striped">

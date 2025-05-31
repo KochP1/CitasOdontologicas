@@ -1,0 +1,51 @@
+.options-menu__container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.options-menu__container h1 {
+    margin-left: 40px;
+}
+
+.options-menu__container hr {
+    border: 1px solid #000000;
+}
+
+.btn-options__container{
+    width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    gap: 15px;
+}
+
+.btn-options:first-child {
+    background-color: #2e5ba3;
+}
+
+.btn-options:nth-child(2) {
+    background-color: #a32e2e;
+}
+
+.btn-options:nth-child(3) {
+    background-color: #2d5c29;
+}
+
+.btn-options {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 0px 5px 0px #333;
+    height: 40px;
+    width: 150px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-options:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+}
