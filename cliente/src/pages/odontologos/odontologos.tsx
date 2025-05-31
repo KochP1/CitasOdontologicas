@@ -72,7 +72,12 @@ export const OdontologsPage = () => {
                 </div>
             </div>
 
-            <Modal modulo='Odontólogo' toggle={toggleModal} modal={modal}></Modal>
+            <Modal modulo='Odontólogo' toggle={toggleModal} modal={modal}>
+                <form>
+                    
+                    <button type='submit' className='btn btn-primary'>Enviar</button>
+                </form>
+            </Modal>
         </>
     )
 }
