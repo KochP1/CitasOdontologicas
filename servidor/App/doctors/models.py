@@ -1,9 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 # Create your models here.
 class Doctor(models.Model):
-    usuario = models.ForeignKey(User, related_name='usuario_doctor', on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=20, null=True)
+    segundo_nombre = models.CharField(max_length=20, null=True)
+    apellido = models.CharField(max_length=25, null=True)
+    segundo_apellido = models.CharField(max_length=25, null=True)
     especialidad = models.CharField(max_length=25)
     telefono = models.CharField(max_length=15)
     dirección = models.CharField(max_length=40)

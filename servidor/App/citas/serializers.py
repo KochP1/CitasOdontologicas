@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from .models import Citas
 from pacientes.serializers import PacienteSerializer
-from doctors.serializers import ObtenerDoctores
+from doctors.serializers import DoctorSerializer
 
 
 class CitasSeializer(serializers.ModelSerializer):
@@ -11,7 +11,7 @@ class CitasSeializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ObtenerCitasSerializer(serializers.ModelSerializer):
-    doctor = ObtenerDoctores(read_only=True)
+    doctor = DoctorSerializer(read_only=True)
     paciente = PacienteSerializer(read_only=True)
 
     class Meta:

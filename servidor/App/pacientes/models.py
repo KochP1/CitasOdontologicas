@@ -16,13 +16,3 @@ class RegistroMedico(models.Model):
     fecha = models.DateField()
     diagnosis = models.TextField(max_length=60)
     tratamiento = models.TextField(max_length=60)
-
-{
-    "nombre": "Juan",
-    "segundo_nombre": "Carlos",
-    "apellido": "Koch",
-    "segundo_apellido": "Gonzales",
-    "telefono": "04141139537",
-    "dirección": 'Bellavista',
-    "historia_medica": "a"
-}

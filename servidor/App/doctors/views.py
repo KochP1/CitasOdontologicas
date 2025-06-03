@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 
-from .serializers import DoctorSerializer, ObtenerDoctores
+from .serializers import DoctorSerializer
 from .models import Doctor
 
 # Create your views here.
@@ -19,5 +19,5 @@ class DoctorView(APIView):
     
     def get(self, request):
         doctores = Doctor.objects.all()
-        serializer = ObtenerDoctores(doctores, many=True)
+        serializer = DoctorSerializer(doctores, many=True)
         return Response(serializer.data)
