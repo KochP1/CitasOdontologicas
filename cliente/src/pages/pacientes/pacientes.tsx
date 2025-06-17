@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { schema_paciente, type FormValuesPacientes } from '../../components/models';
+import { useDelete } from '../../hooks';
 
 const url = 'http://127.0.0.1:8000/pacientes/crear_paciente/'
 
@@ -21,6 +22,7 @@ interface Paciente {
 }
 
 export const PacientesPage = () => {
+
 
     const { control, handleSubmit, formState: { errors } } = useForm<FormValuesPacientes>({
         resolver: zodResolver(schema_paciente),
@@ -99,6 +101,20 @@ export const PacientesPage = () => {
         document.body.classList.remove('active-modal')
     }
     const {data, error} = useFetch<Paciente[]>(url);
+
+    const { error: elimError, deleteData } = useDelete<string>()
+
+    const eliminar_paciente = async (id: number) => {
+        if(confirm('Estas seguro de que quieres eliminar al paciente?')) {
+            if (elimError) {
+                alert('Error al eliminar el paciente');
+            }
+
+            await deleteData(`http://127.0.0.1:8000/pacientes/modificar_paciente/${id}`);
+            alert('Paciente eliminado');
+            window.location.reload();
+        }
+    }
     return(
         <>
             {apiError && (
@@ -147,7 +163,7 @@ export const PacientesPage = () => {
                                     <td>{pacientes.dirección}</td>
                                     <td>{pacientes.historia_medica}</td>
                                     <td><button className='btn btn-primary'>Editar</button></td>
-                                    <td><button className='btn btn-danger'>Eliminar</button></td>
+                                    <td><button className='btn btn-danger' onClick={() => eliminar_paciente(pacientes.id)}>Eliminar</button></td>
                                 </tr>
                             ))}
                         </tbody>

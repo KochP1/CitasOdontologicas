@@ -10,7 +10,6 @@ import { useDelete } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 
 const url = 'http://127.0.0.1:8000/doctores/crear_doctor/'
-const navigate = useNavigate();
 
 interface Profesional {
     id: number
@@ -25,6 +24,8 @@ interface Profesional {
 }
 
 export const OdontologsPage = () => {
+    const navigate = useNavigate();
+    
     const { control, handleSubmit, formState: { errors } } = useForm<FormValuesOdontolgo>({
         resolver: zodResolver(schema_odontologo),
         mode: 'onBlur'

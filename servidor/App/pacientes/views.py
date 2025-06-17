@@ -19,3 +19,16 @@ class PacienteView(APIView):
         pacientes = Paciente.objects.all()
         serializer = PacienteSerializer(pacientes, many=True)
         return Response(serializer.data)
+
+class ModificarPaciente(APIView):
+    allowed_methods = ['GET', 'DELETE', 'PUT']
+
+    def get(self, request, pk):
+        paciente = Paciente.objects.get(id = pk)
+        serializer = PacienteSerializer(paciente, many=False)
+        return Response(serializer.data)
+    
+    def delete(self, request, pk):
+        paciente = Paciente.objects.get(id = pk)
+        paciente.delete()
+        return Response({'mensaje': 'Paciente eliminado', 'idPaciente': f'{pk}'}, status=status.HTTP_200_OK)
