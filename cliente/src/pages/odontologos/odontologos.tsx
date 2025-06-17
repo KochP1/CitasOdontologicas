@@ -6,9 +6,11 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { schema_odontologo, type FormValuesOdontolgo } from '../../components/models';
+import { useDelete } from '../../hooks';
+import { useNavigate } from 'react-router-dom';
 
 const url = 'http://127.0.0.1:8000/doctores/crear_doctor/'
-
+const navigate = useNavigate();
 
 interface Profesional {
     id: number
@@ -29,21 +31,19 @@ export const OdontologsPage = () => {
     });
 
     const [apiError, setApiError] = useState<Error | null>(null);
+
+    if (apiError) {
+        alert('Error al cargar datos');
+        navigate('/')
+    }
     const [succes, setSucces] = useState(false)
 
     const toggleSucces = () => {
         setSucces(true);
-    }
-
-    const clear = () => {
-        const input = document.querySelectorAll('.form-control');
-
-        if (input) {
-            input.forEach((element) => {
-                element.textContent = ''
-            })
+        if(succes) {
+            alert('Odontologo creado');
+            window.location.reload();
         }
-
     }
 
     const onSubmit: SubmitHandler<FormValuesOdontolgo> = async (fields) => {
@@ -75,9 +75,7 @@ export const OdontologsPage = () => {
     
                 const response = await fetch(url, options);
 
-                clear()
-                toggleModal()
-                toggleSucces()
+                toggleSucces();
     
                 if (!response.ok) {         
                     throw new Error(`HTTP error! status: ${response.status }`);
@@ -101,6 +99,21 @@ export const OdontologsPage = () => {
         document.body.classList.remove('active-modal')
     }
     const {data, error} = useFetch<Profesional[]>(url);
+
+    const { error: elimError, deleteData } = useDelete<string>()
+
+    const eliminarDoctor = async (id: number) => {
+        if (confirm('Estas seguro de que quieres eliminar el odontólogo?')) {
+
+            if (elimError) {
+                alert('Error al eliminar odontólogo')
+            }
+            await deleteData(`http://127.0.0.1:8000/doctores/modificar_doctor/${id}`);
+            alert('Odontólogo eliminado');
+            window.location.reload();
+        }
+    }
+
     return(
         <>
             <OpcionesModulos modulo='Odontólogos' OnClick={toggleModal}/>
@@ -129,6 +142,8 @@ export const OdontologsPage = () => {
                                     <td>{doctores.telefono}</td>
                                     <td>{doctores.dirección}</td>
                                     <td>{doctores.vacaciones}</td>
+                                    <td><button className='btn btn-primary'>Editar</button></td>
+                                    <td><button className='btn btn-danger' onClick={() => eliminarDoctor(doctores.id)}>Eliminar</button></td>
                                 </tr>
                             ))}
                         </tbody>

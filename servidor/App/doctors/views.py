@@ -21,3 +21,16 @@ class DoctorView(APIView):
         doctores = Doctor.objects.all()
         serializer = DoctorSerializer(doctores, many=True)
         return Response(serializer.data)
+
+class DoctorUpdate(APIView):
+    allowed_methods = ['GET', 'DELETE', 'PUT']
+
+    def get(self, request, pk):
+        doctores = Doctor.objects.get(id = pk)
+        serializer = DoctorSerializer(doctores, many=False)
+        return Response(serializer.data)
+    
+    def delete(self, request, pk):
+        doctor = Doctor.objects.get(id = pk)
+        doctor.delete()
+        return Response({'mensaje': 'Odontologo elimiando'}, status=status.HTTP_200_OK)
