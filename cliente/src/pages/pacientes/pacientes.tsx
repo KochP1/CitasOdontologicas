@@ -2,7 +2,7 @@ import './pacientes.css'
 import { useFetch } from '../../hooks/useFetch/useFetch';
 import { InputFormPaciente, Modal, OpcionesModulos } from '../../components';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { schema_paciente, type FormValuesPacientes } from '../../components/models';
@@ -162,7 +162,11 @@ export const PacientesPage = () => {
                                     <td>{pacientes.telefono}</td>
                                     <td>{pacientes.dirección}</td>
                                     <td>{pacientes.historia_medica}</td>
-                                    <td><button className='btn btn-primary'>Editar</button></td>
+                                    <td>
+                                        <Link to={`/dashboard/editar/${pacientes.id}/paciente`}>
+                                            <button className='btn btn-primary'>Editar</button>
+                                        </Link>
+                                    </td>
                                     <td><button className='btn btn-danger' onClick={() => eliminar_paciente(pacientes.id)}>Eliminar</button></td>
                                 </tr>
                             ))}

@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { schema_odontologo, type FormValuesOdontolgo } from '../../components/models';
 import { useDelete } from '../../hooks';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const url = 'http://127.0.0.1:8000/doctores/crear_doctor/'
 
@@ -31,12 +31,15 @@ export const OdontologsPage = () => {
         mode: 'onBlur'
     });
 
+    // ERROR DEL SERVIDOR
     const [apiError, setApiError] = useState<Error | null>(null);
 
     if (apiError) {
         alert('Error al cargar datos');
         navigate('/')
     }
+
+    // EXITO DEL SERVIDOR
     const [succes, setSucces] = useState(false)
 
     const toggleSucces = () => {
@@ -47,6 +50,7 @@ export const OdontologsPage = () => {
         }
     }
 
+    // POST ODONTÓLOGO
     const onSubmit: SubmitHandler<FormValuesOdontolgo> = async (fields) => {
             setApiError(null);
             const nombre = fields.nombre
@@ -87,7 +91,7 @@ export const OdontologsPage = () => {
             }
     };
 
-
+    // MODAL 
     const [modal, setModal] = useState(false);
     
     const toggleModal = () => {
@@ -99,8 +103,11 @@ export const OdontologsPage = () => {
     } else {
         document.body.classList.remove('active-modal')
     }
+
+    // GET ODONTÓLOGO
     const {data, error} = useFetch<Profesional[]>(url);
 
+    // DELETE ODONTÓLOGO
     const { error: elimError, deleteData } = useDelete<string>()
 
     const eliminarDoctor = async (id: number) => {
@@ -115,6 +122,7 @@ export const OdontologsPage = () => {
         }
     }
 
+    // RENDER PÁGINA
     return(
         <>
             <OpcionesModulos modulo='Odontólogos' OnClick={toggleModal}/>
@@ -143,10 +151,15 @@ export const OdontologsPage = () => {
                                     <td>{doctores.telefono}</td>
                                     <td>{doctores.dirección}</td>
                                     <td>{doctores.vacaciones}</td>
-                                    <td><button className='btn btn-primary'>Editar</button></td>
+                                    <td>
+                                        <Link to={`/dashboard/editar/${doctores.id}/doctor`}>
+                                            <button className='btn btn-primary'>Editar</button>
+                                        </Link>
+                                    </td>
                                     <td><button className='btn btn-danger' onClick={() => eliminarDoctor(doctores.id)}>Eliminar</button></td>
                                 </tr>
                             ))}
+
                         </tbody>
                     </table>
                 </div>

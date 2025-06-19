@@ -1,0 +1,16 @@
+.campos__container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+}
+
+.campos__container label {
+    font-size: 2rem;
+}
+
+.campos__container input {
+    font-size: 1.4rem;
+    width: 300px;
+    height: 40px;
+}
