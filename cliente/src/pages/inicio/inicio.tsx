@@ -3,6 +3,10 @@ import './inicio.css'
 export const Inicio = () => {
     return (
         <div className="inicio__wrapper">
+            <div className='logo-inicio__container'>
+                <div className='logo-inicio'></div>
+            </div>
+
             <div className="stats-grid__container">
                 
                 <div className="stat__container">
