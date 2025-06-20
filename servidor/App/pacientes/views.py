@@ -32,3 +32,13 @@ class ModificarPaciente(APIView):
         paciente = Paciente.objects.get(id = pk)
         paciente.delete()
         return Response({'mensaje': 'Paciente eliminado', 'idPaciente': f'{pk}'}, status=status.HTTP_200_OK)
+    
+    def put(self, request, pk):
+        try:
+            paciente = Paciente.objects.get(id = pk)
+        except Paciente.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = PacienteSerializer(paciente, data = request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response({'mensaje': 'Paciente actualizado'}, status=status.HTTP_201_CREATED)
