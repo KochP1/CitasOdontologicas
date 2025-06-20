@@ -30,7 +30,7 @@
     gap: 10px;
 }
 
-.edit__conatiner {
+.edit__container {
     display: grid;
     grid-template-columns: repeat(3, max-content);
     grid-template-rows: repeat(2, max-content);

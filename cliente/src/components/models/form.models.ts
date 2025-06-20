@@ -41,3 +41,17 @@ export const schema_odontologo = z.object({
 })
 
 export type FormValuesOdontolgo = z.infer<typeof schema_odontologo>
+
+
+export const schema_editUser = z.object({
+    nombre: z.string().max(20, 'El nombre puede tener 20 caracteres max'),
+    segundoNombre: z.string().max(20, 'El segundo nombre puede tener 20 caracteres max'),
+    apellido: z.string().max(25, 'El apellido puede tener 25 caracteres max'),
+    segundoApellido: z.string().max(25, 'El segundo apellido puede tener 25 caracteres max'),
+    teléfono: z.string().max(15, 'El teléfono puede tenr 15 caracteres max'),
+    direccion: z.string().max(40, 'La dirección puede tener 40 caracteres max'),
+    historia_medica: z.string(),
+    vacaciones: z.string()
+})
+
+export type FormValuesEdit = z.infer<typeof schema_editUser>
