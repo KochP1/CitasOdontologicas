@@ -46,7 +46,7 @@ export const SideBar = () => {
                     </div>
 
                     <div className="link__container">
-                        <Link to={""} className="sidebar-link">Citas</Link>
+                        <Link to={"/dashboard/citas"} className="sidebar-link">Citas</Link>
                     </div>
                 </div>
 
