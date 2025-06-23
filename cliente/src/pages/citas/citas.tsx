@@ -1,32 +1,10 @@
 import { Link, useNavigate } from "react-router-dom"
 import { OpcionesModulos } from "../../components"
 import { useFetch } from "../../hooks/useFetch/useFetch";
+import { type Paciente, type Profesional } from '../../components/models';
 import './citas.css'
 
 const url = 'http://127.0.0.1:8000/citas/crear_citas/';
-
-interface Profesional {
-    id: number
-    nombre: string;
-    segundo_nombre: string;
-    apellido: string;
-    segundo_apellido: string
-    especialidad: string;
-    telefono: string;
-    dirección: string;
-    vacaciones: boolean;
-}
-
-interface Paciente {
-    id: number
-    nombre: string;
-    segundo_nombre: string;
-    apellido: string;
-    segundo_apellido: string
-    telefono: number
-    dirección: string
-    historia_medica: string | null
-}
 
 interface Cita {
     id: number

@@ -1,11 +1,19 @@
+import { useFetch } from '../../hooks/useFetch/useFetch';
+import { type Paciente, type Profesional } from '../../components/models';
+
 import './citas.css'
 
+const urlDoctores = 'http://127.0.0.1:8000/doctores/crear_doctor/';
+const urlPacientes = 'http://127.0.0.1:8000/pacientes/crear_paciente/';
 
 export const CrearCitaPage = () => {
 
     const handleCellClick = (id: string) => {
         console.log(`Celda clickeada: ${id}`);
     };
+
+    const { data: doctoresData, error: doctoresError} = useFetch<Profesional[]>(urlDoctores)
+    const { data: pacientesData, error: pacientesError} = useFetch<Paciente[]>(urlPacientes)
 
     return (
         <>
@@ -28,6 +36,9 @@ export const CrearCitaPage = () => {
                                 <label>Odontólogo</label>
                                 <select>
                                     <option value="">Selecciona un odontólogo</option>
+                                    {doctoresData !== null && !doctoresError && doctoresData.map((doctor) => (
+                                        <option value={doctor.id}>{doctor.nombre} {doctor.apellido}</option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -35,6 +46,9 @@ export const CrearCitaPage = () => {
                                 <label>Paciente</label>
                                 <select>
                                     <option value="">Selecciona un paciente</option>
+                                    {pacientesData !== null && !pacientesError && pacientesData.map((paciente) => (
+                                        <option value={paciente.id}>{paciente.nombre} {paciente.apellido}</option>
+                                    ))}
                                 </select>
                             </div>
 
