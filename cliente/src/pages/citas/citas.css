@@ -54,3 +54,7 @@
     width: 70%;
     height: 70%;
 }
+
+.table-horario td:hover {
+    cursor: crosshair;
+}

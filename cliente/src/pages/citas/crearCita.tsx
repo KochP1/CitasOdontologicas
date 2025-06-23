@@ -6,10 +6,63 @@ import './citas.css'
 const urlDoctores = 'http://127.0.0.1:8000/doctores/crear_doctor/';
 const urlPacientes = 'http://127.0.0.1:8000/pacientes/crear_paciente/';
 
+interface HorarioSeleccionado {
+    celdaId: string;
+    dia: string | null;
+    horaInicio: string | null;
+    horaFin: string | null;
+    color: string;
+}
+
+const horariosSeleccionados: HorarioSeleccionado[] = []
+
 export const CrearCitaPage = () => {
+
+    function getRandomColor() {
+        const colors = ['#FFD700', '#98FB98', '#ADD8E6', '#FFB6C1', '#E6E6FA', '#FFA07A', '#90EE90', '#87CEFA', '#FFC0CB'];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+
 
     const handleCellClick = (id: string) => {
         console.log(`Celda clickeada: ${id}`);
+        const celda = document.getElementById(id);
+
+        if (!celda) {
+            return;
+        }
+
+        const color = getRandomColor();
+        const dia = celda.getAttribute('data-dia');
+        const horaInicio = celda.getAttribute('data-hora-inicio');
+        const horaFin = celda.getAttribute('data-hora-fin');
+
+        const existe = horariosSeleccionados.some(item => 
+            item.celdaId === celda.id
+        );
+
+        if (!existe) {
+            celda.style.backgroundColor = color;
+
+            horariosSeleccionados.push({
+                celdaId: celda.id,
+                dia: dia,
+                horaInicio: horaInicio,
+                horaFin: horaFin,
+                color: color
+            });
+
+        } else {
+            celda.style.backgroundColor = '';
+
+            const index = horariosSeleccionados.findIndex(item => 
+                item.celdaId === celda.id
+            );
+
+            if (index !== -1) {
+                horariosSeleccionados.splice(index, 1);
+            }
+        }
     };
 
     const { data: doctoresData, error: doctoresError} = useFetch<Profesional[]>(urlDoctores)
