@@ -25,7 +25,6 @@ export const CrearCitaPage = () => {
 
 
     const handleCellClick = (id: string) => {
-        console.log(`Celda clickeada: ${id}`);
         const celda = document.getElementById(id);
 
         if (!celda) {
@@ -90,7 +89,7 @@ export const CrearCitaPage = () => {
                                 <select>
                                     <option value="">Selecciona un odontólogo</option>
                                     {doctoresData !== null && !doctoresError && doctoresData.map((doctor) => (
-                                        <option value={doctor.id}>{doctor.nombre} {doctor.apellido}</option>
+                                        <option key={doctor.id} value={doctor.id}>{doctor.nombre} {doctor.apellido}</option>
                                     ))}
                                 </select>
                             </div>
@@ -100,7 +99,7 @@ export const CrearCitaPage = () => {
                                 <select>
                                     <option value="">Selecciona un paciente</option>
                                     {pacientesData !== null && !pacientesError && pacientesData.map((paciente) => (
-                                        <option value={paciente.id}>{paciente.nombre} {paciente.apellido}</option>
+                                        <option key={paciente.id} value={paciente.id}>{paciente.nombre} {paciente.apellido}</option>
                                     ))}
                                 </select>
                             </div>
