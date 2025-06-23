@@ -14,6 +14,7 @@ interface Cita {
     hora: string
     es_activa: boolean
 }
+
 export const CitasPage = () => {
     const navigate = useNavigate();
 
