@@ -2,6 +2,7 @@ import './citas.css'
 
 
 export const CrearCitaPage = () => {
+
     const handleCellClick = (id: string) => {
         console.log(`Celda clickeada: ${id}`);
     };
@@ -19,8 +20,8 @@ export const CrearCitaPage = () => {
 
                         <div className='crear-cita__container'>
 
-                            <div className="imagen-usuario__container">
-                                <img src="/images/user.png" alt="user" />
+                            <div className="imagen-cita__container">
+                                <img src="/images/cita-medica.png" alt="user" />
                             </div>
 
                             <div className='crear-cita__form-control'>
