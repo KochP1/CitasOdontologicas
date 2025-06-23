@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import { OpcionesModulos } from "../../components"
 import { useFetch } from "../../hooks/useFetch/useFetch";
+import { useDelete } from "../../hooks";
 import { type Paciente, type Profesional } from '../../components/models';
 import './citas.css'
 
@@ -19,6 +20,21 @@ export const CitasPage = () => {
     const navigate = useNavigate();
 
     const { data, error } = useFetch<Cita[]>(url)
+
+    const { error: elimError, deleteData} = useDelete<string>()
+
+    const deleteRecord = async (id: number) => {
+        if (confirm('Estas seguro de que quieres eliminar la cita?')) {
+            if (elimError) {
+                alert('Error al eliminar la cita');
+            }
+
+            await deleteData(`http://127.0.0.1:8000/citas/modificar_cita/${id}`);
+            alert('Cita eliminada');
+            window.location.reload();
+        }
+    }
+    
     return (
         <>
             <OpcionesModulos modulo="Citas" OnClick={() => {navigate('/dashboard/crear_cita')}}></OpcionesModulos>
@@ -50,7 +66,7 @@ export const CitasPage = () => {
                                             <button className='btn btn-primary'>Editar</button>
                                         </Link>
                                     </td>
-                                    <td><button className='btn btn-danger'>Eliminar</button></td>
+                                    <td><button className='btn btn-danger' onClick={() => deleteRecord(cita.id)}>Eliminar</button></td>
                                 </tr>
                             ))}
                         </tbody>

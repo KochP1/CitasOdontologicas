@@ -19,3 +19,16 @@ class CitaView(APIView):
         citas = Citas.objects.all()
         serializer = ObtenerCitasSerializer(citas, many=True)
         return Response(serializer.data)
+
+class DetailCita(APIView):
+    allowed_methods = ['GET', 'DELETE', 'PUT']
+
+    def get(self, request, pk):
+        cita = Citas.objects.get(id = pk)
+        serializer = ObtenerCitasSerializer(cita, many = False)
+        return Response(serializer.data)
+    
+    def delete(self, request, pk):
+        cita = Citas.objects.get(id = pk)
+        cita.delete()
+        return Response({'mensaje': 'Cita eliminada'}, status=status.HTTP_200_OK)
