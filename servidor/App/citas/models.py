@@ -8,4 +8,6 @@ class Citas(models.Model):
     paciente = models.ForeignKey(Paciente, related_name='cita_paciente', on_delete=models.CASCADE)
     fecha = models.DateField()
     hora = models.TimeField()
+    hora_final = models.TimeField(null=True)
+    dia = models.TextField(null = True)
     es_activa = models.BooleanField(default=True)

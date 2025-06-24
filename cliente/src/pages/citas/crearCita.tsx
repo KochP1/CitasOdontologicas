@@ -1,7 +1,10 @@
 import { useFetch } from '../../hooks/useFetch/useFetch';
-import { type Paciente, type Profesional } from '../../components/models';
+import { schema_cita, type FormValuesCita, type Paciente, type Profesional } from '../../components/models';
+import { InputFormCita, SelectFormCita } from '../../components/inputForm/inputFormCita';
 
 import './citas.css'
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const urlDoctores = 'http://127.0.0.1:8000/doctores/crear_doctor/';
 const urlPacientes = 'http://127.0.0.1:8000/pacientes/crear_paciente/';
@@ -17,6 +20,11 @@ interface HorarioSeleccionado {
 const horariosSeleccionados: HorarioSeleccionado[] = []
 
 export const CrearCitaPage = () => {
+
+    const { control, handleSubmit, formState: { errors } } = useForm<FormValuesCita>({
+            resolver: zodResolver(schema_cita),
+            mode: 'onBlur'
+    });
 
     function getRandomColor() {
         const colors = ['#FFD700', '#98FB98', '#ADD8E6', '#FFB6C1', '#E6E6FA', '#FFA07A', '#90EE90', '#87CEFA', '#FFC0CB'];
@@ -84,25 +92,27 @@ export const CrearCitaPage = () => {
                                 <img src="/images/cita-medica.png" alt="user" />
                             </div>
 
-                            <div className='crear-cita__form-control'>
-                                <label>Odontólogo</label>
-                                <select>
-                                    <option value="">Selecciona un odontólogo</option>
-                                    {doctoresData !== null && !doctoresError && doctoresData.map((doctor) => (
-                                        <option key={doctor.id} value={doctor.id}>{doctor.nombre} {doctor.apellido}</option>
-                                    ))}
-                                </select>
-                            </div>
+                            <SelectFormCita label='Odontólogo' name='doctor' control={control} >
+                                <option value="">Selecciona un paciente</option>
+                                {doctoresData !== null && !doctoresError && doctoresData.map((doctor) => (
+                                    <option key={doctor.id} value={doctor.id}>{doctor.nombre} {doctor.apellido}</option>
+                                ))}
+                            </SelectFormCita>
 
-                            <div className='crear-cita__form-control'>
-                                <label>Paciente</label>
-                                <select>
-                                    <option value="">Selecciona un paciente</option>
-                                    {pacientesData !== null && !pacientesError && pacientesData.map((paciente) => (
-                                        <option key={paciente.id} value={paciente.id}>{paciente.nombre} {paciente.apellido}</option>
-                                    ))}
-                                </select>
-                            </div>
+                            <SelectFormCita label='Paciente' name='paciente' control={control} >
+                                <option value="">Selecciona un paciente</option>
+                                {pacientesData !== null && !pacientesError && pacientesData.map((paciente) => (
+                                    <option key={paciente.id} value={paciente.id}>{paciente.nombre} {paciente.apellido}</option>
+                                ))}
+                            </SelectFormCita>
+
+                            <InputFormCita label='Fecha' name='fecha' type='date' control={control}></InputFormCita>
+
+                            <InputFormCita label='' name='hora' control={control} type='hidden'></InputFormCita>
+
+                            <InputFormCita label='' name='hora_final' control={control} type='hidden'></InputFormCita>
+
+                            <InputFormCita label='' name='dia' control={control} type='hidden'></InputFormCita>
 
                             <button type='submit' className='btn btn-primary btn-crear-cita'>Crear</button>
                         </div>

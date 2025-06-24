@@ -55,3 +55,14 @@ export const schema_editUser = z.object({
 })
 
 export type FormValuesEdit = z.infer<typeof schema_editUser>
+
+export const schema_cita = z.object({
+    doctor: z.string(),
+    paciente: z.string(),
+    fecha: z.string(),
+    hora: z.string(),
+    hora_final: z.string(),
+    dia: z.string(),
+})
+
+export type FormValuesCita = z.infer<typeof schema_cita>
