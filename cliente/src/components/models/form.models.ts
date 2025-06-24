@@ -62,7 +62,7 @@ export const schema_cita = z.object({
     fecha: z.string(),
     hora: z.string(),
     hora_final: z.string(),
-    dia: z.string(),
+    dia: z.string()
 })
 
 export type FormValuesCita = z.infer<typeof schema_cita>

@@ -1,13 +1,16 @@
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import { useFetch } from '../../hooks/useFetch/useFetch';
 import { schema_cita, type FormValuesCita, type Paciente, type Profesional } from '../../components/models';
 import { InputFormCita, SelectFormCita } from '../../components/inputForm/inputFormCita';
-
 import './citas.css'
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const urlDoctores = 'http://127.0.0.1:8000/doctores/crear_doctor/';
 const urlPacientes = 'http://127.0.0.1:8000/pacientes/crear_paciente/';
+const urlCrearCita = 'http://127.0.0.1:8000/citas/crear_citas/';
 
 interface HorarioSeleccionado {
     celdaId: string;
@@ -17,21 +20,94 @@ interface HorarioSeleccionado {
     color: string;
 }
 
+
 const horariosSeleccionados: HorarioSeleccionado[] = []
 
 export const CrearCitaPage = () => {
 
-    const { control, handleSubmit, formState: { errors } } = useForm<FormValuesCita>({
+    const navigate = useNavigate();
+
+    // Controlador de formulario ZOD
+    const { control, handleSubmit, reset, formState: { errors }, getValues } = useForm<FormValuesCita>({
             resolver: zodResolver(schema_cita),
-            mode: 'onBlur'
+            mode: 'onBlur',
+            defaultValues: {
+                dia: '',
+                hora: '',
+                hora_final: '',
+                fecha: ''
+            }
     });
 
+    // UseState para error de la api
+
+    const [apiError, setApiError] = useState<Error | null>(null);
+
+    // POST cita
+
+    const onSubmit: SubmitHandler<FormValuesCita> = async (fields) => {
+        setApiError(null);
+
+        if (horariosSeleccionados.length > 1) {
+            alert('Solo se puede seleccionar un dia para la cita');
+            return;
+        };
+
+        const doctor = fields.doctor;
+        const paciente = fields.paciente;
+        const fecha = fields.fecha;
+        const hora = fields.hora;
+        const hora_final = fields.hora_final;
+        const dia = fields.dia;
+
+        console.log(doctor);
+        console.log(paciente);
+        console.log(fecha);
+        console.log(dia);
+        console.log(hora);
+        console.log(hora_final);
+
+        try {
+            const response = await fetch(urlCrearCita, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+
+                body: JSON.stringify({
+                    "doctor": doctor,
+                    "paciente": paciente,
+                    "fecha": fecha,
+                    "hora": hora,
+                    "hora_final": hora_final,
+                    "dia": dia
+                })
+            });
+
+            const data = await response.json()
+            if (!response.ok) {
+                throw new Error(`Error al crear una cita: ${data.erro}`);
+            }
+
+            alert('Cita creada');
+            navigate('/dashboard/citas');
+        } catch (error) {
+            setApiError(error as Error);
+            console.log(apiError)
+        } finally {
+            while(horariosSeleccionados.length) {
+                horariosSeleccionados.pop();
+            }
+        }
+    }
+
+    // Obtener color aleatorio
     function getRandomColor() {
         const colors = ['#FFD700', '#98FB98', '#ADD8E6', '#FFB6C1', '#E6E6FA', '#FFA07A', '#90EE90', '#87CEFA', '#FFC0CB'];
         return colors[Math.floor(Math.random() * colors.length)];
     }
 
-
+    // Funcionar para seleccionar dia y hora del horario
     const handleCellClick = (id: string) => {
         const celda = document.getElementById(id);
 
@@ -59,6 +135,16 @@ export const CrearCitaPage = () => {
                 color: color
             });
 
+            if (dia && horaInicio && horaFin) {
+
+                reset({
+                    ...getValues(),
+                    dia: dia,
+                    hora: horaInicio,
+                    hora_final: horaFin
+                })
+            }
+
         } else {
             celda.style.backgroundColor = '';
 
@@ -72,6 +158,7 @@ export const CrearCitaPage = () => {
         }
     };
 
+    // Fetch doctores y pacientes
     const { data: doctoresData, error: doctoresError} = useFetch<Profesional[]>(urlDoctores)
     const { data: pacientesData, error: pacientesError} = useFetch<Paciente[]>(urlPacientes)
 
@@ -84,7 +171,7 @@ export const CrearCitaPage = () => {
 
             <div className='crear-cita__wrapper'>
 
-                <form className='crear-cita__form'>
+                <form className='crear-cita__form' onSubmit={handleSubmit(onSubmit)}>
 
                         <div className='crear-cita__container'>
 

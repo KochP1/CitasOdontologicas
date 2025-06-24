@@ -1,3 +1,4 @@
+from django.forms import ValidationError
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -11,9 +12,13 @@ class CitaView(APIView):
 
     def post(self, request):
         serializer = CitasSeializer(data = request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({'mensaje': 'Cita agendada exitosamente'}, status=status.HTTP_201_CREATED)
+        try:
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response({'mensaje': 'Cita agendada exitosamente'}, status=status.HTTP_201_CREATED)
+        except ValidationError as e:
+            # Devuelve los errores de validación en el formato que prefieras
+            return Response({'error': e}, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
         citas = Citas.objects.all()
